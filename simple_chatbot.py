@@ -1,3 +1,5 @@
+import string
+
 responses = {
     "hi": "Hello! Welcome to TechGadget Support. How can I assist you today?",
     "hello": "Hello! Welcome to TechGadget Support. How can I assist you today?",
@@ -23,9 +25,9 @@ responses = {
 
 
 def get_bot_response(user_input):
-    user_input = user_input.lower()
+    user_input = user_input.lower().translate(str.maketrans('', '', string.punctuation))
     for keyword, response in responses.items():
-        if keyword in user_input:
+        if keyword == user_input:
             return response
     return "I'm not sure how to respond to that. Can you try asking something else?"
 
@@ -44,9 +46,9 @@ def chat():
         else:
             unknown_count = 0
 
-        print(f"Bot: {response}")
-
-        if unknown_count >= 3:
+        if unknown_count < 3:
+            print(f"Bot: {response}")
+        else:
             print(
                 "Bot: It seems like I'm having trouble understanding your questions. Please contact our human customer service representative for further assistance.")
             break
